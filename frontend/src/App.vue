@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="counter">
+        {{ message }}
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: 'App',
+    data() {
+        return {
+            message: 'Loading...',
+        };
+    },
+    async mounted() {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/');
+            const text = await response.text();
+            this.message = text;
+        } catch (error) {
+            console.error("Failed to fetch visit count:", error);
+            this.message = "Failed to load visit count.";
+        }
+    },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
 }
 </style>
