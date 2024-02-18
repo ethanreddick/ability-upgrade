@@ -14,7 +14,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await fetch('http://127.0.0.1:8080/');
+            const response = await fetch('/api/visits');
             const text = await response.text();
             this.message = text;
         } catch (error) {
