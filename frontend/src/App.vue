@@ -1,36 +1,30 @@
 <template>
-    <div class="counter">
-        {{ message }}
+    <div>
+        <!-- Navbar Component -->
+        <SiteNavbar />
+        <!-- Placeholder for future content -->
+        <div class="placeholder-content">
+            <p>Welcome to Ability Upgrade</p>
+        </div>
     </div>
 </template>
 
 <script>
+import SiteNavbar from './components/SiteNavbar.vue'; // Ensure this path matches the location of your Navbar.vue file
+
 export default {
     name: 'App',
-    data() {
-        return {
-            message: 'Loading...',
-        };
-    },
-    async mounted() {
-        try {
-            const response = await fetch('/api/visits');
-            const text = await response.text();
-            this.message = text;
-        } catch (error) {
-            console.error("Failed to fetch visit count:", error);
-            this.message = "Failed to load visit count.";
-        }
+    components: {
+        SiteNavbar // Register Navbar component for use
     },
 };
 </script>
 
 <style>
-.counter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 20px;
+/* Styling for placeholder content, adjust as needed */
+.placeholder-content {
+    text-align: center;
+    margin-top: 20px;
+    /* Adds some space below the navbar */
 }
 </style>
