@@ -42,18 +42,36 @@
 
             <!-- Social Links on the Top Right -->
             <div class="d-flex">
-                <a href="https://linkedin.com" class="nav-link">LinkedIn</a>
-                <a href="https://github.com" class="nav-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/ethanreddick/" class="nav-link">
+                    <font-awesome-icon :icon="['fab', 'linkedin']" class="icon"/>
+                </a>
+                <a href="https://github.com/ethanreddick" class="nav-link">
+                    <font-awesome-icon :icon="['fab', 'github']" class="icon"/>
+                </a>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 export default {
     name: "SiteNavbar",
+    components: {
+        FontAwesomeIcon
+    }
 };
 </script>
 
 <style scoped>
+.icon {
+  color: black; /* Sets the icon color to black */
+  font-size: 24px; /* Increase the size of the icon */
+  margin-right: 15px; /* Adds margin to the right of each icon */
+}
+/* If you want to specifically target only the last icon to not have a margin, you can use :last-child selector */
+.nav-link:last-child .icon {
+  margin-right: 0; /* Removes margin for the last icon */
+}
 </style>
