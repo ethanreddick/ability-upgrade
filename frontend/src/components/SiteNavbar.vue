@@ -8,9 +8,9 @@
 
                 <!-- Centered Navigation Buttons -->
                 <div class="navbar-nav centered-nav">
-                    <a class="nav-item nav-link" href="#">Home</a>
+                    <router-link to="/" class="nav-item nav-link">Home</router-link>
                     <a class="nav-item nav-link" href="#">Blog</a>
-                    <a class="nav-item nav-link" href="#">Projects</a>
+                    <router-link to="/projects" class="nav-item nav-link">Projects</router-link>
                 </div>
 
                 <!-- Social Links on the Top Right -->
