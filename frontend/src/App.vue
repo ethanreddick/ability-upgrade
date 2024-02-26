@@ -1,21 +1,19 @@
 <template>
-    <div>
-        <!-- Navbar Component -->
+    <div id="app">
         <SiteNavbar />
-        <!-- Placeholder for future content -->
-        <div class="placeholder-content">
-            <p>Welcome to Ability Upgrade</p>
-        </div>
+        <HomePage />
     </div>
 </template>
 
 <script>
-import SiteNavbar from './components/SiteNavbar.vue'; // Ensure this path matches the location of your Navbar.vue file
+import SiteNavbar from './components/SiteNavbar.vue';
+import HomePage from './components/HomePage.vue';
 
 export default {
     name: 'App',
     components: {
-        SiteNavbar // Register Navbar component for use
+        SiteNavbar,
+        HomePage
     },
 };
 </script>
