@@ -19,34 +19,24 @@
 </template>
 
 <script>
+import { projects } from '../data/projectsData.js';
+
 export default {
     name: 'ProjectsPage',
     data() {
         return {
-            projects: [
-                {
-                    id: "NAS",
-                    title: 'Network Attached Storage (NAS)',
-                    description: 'A multipurpose network storage server with file sharing, multimedia streaming, and cloud synchronization capabilities.',
-                    imageName: 'nas.png', // image credit: https://www.flaticon.com/free-icon/nas_4943821
-                    created: 'July 20th, 2023',
-                    updated: 'January 23rd, 2024',
-                },
-                {
-                    id: "RasberryPi5",
-                    title: 'Rasberry Pi 5',
-                    description: 'Used to host this website. I SSH into the Pi using certificates I configured to update the website and manage the server.',
-                    imageName: 'pi.png', // image credit:
-                    created: 'Febrary 21st, 2024',
-                    updated: 'Febrary 24th, 2024',
-                },
-                // Add more projects here
-            ],
+
         };
+    },
+    computed: {
+        // Use a computed property to access the imported projects
+        projects() {
+            return projects;
+        }
     },
     methods: {
         goToProject(projectId) {
-            // Change 'id' to 'projectId' to match the route parameter name
+            // Navigate to the ProjectDetail component with the project ID
             this.$router.push({ name: 'ProjectDetail', params: { projectId } });
         },
     },
@@ -64,16 +54,21 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* Changed from flex-start to center */
     margin: 10px;
-    /* Decreased from 20px to reduce space between bubbles */
     padding: 20px;
-    /* This applies padding equally on all sides */
     padding-bottom: 10px;
-    /* Reduced the bottom padding specifically */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     border-radius: 15px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /* Smooth transition for shadow and transform */
+}
+
+.project-bubble:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* Enhanced shadow for raised effect */
+    transform: translateY(-5px);
+    /* Slightly lift the element */
 }
 
 .project-image img {
