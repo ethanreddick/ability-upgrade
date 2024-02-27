@@ -25,7 +25,7 @@ export default {
         return {
             projects: [
                 {
-                    id: 1,
+                    id: "NAS",
                     title: 'Network Attached Storage (NAS)',
                     description: 'A multipurpose network storage server with file sharing, multimedia streaming, and cloud synchronization capabilities.',
                     imageName: 'nas.png', // image credit: https://www.flaticon.com/free-icon/nas_4943821
@@ -33,10 +33,10 @@ export default {
                     updated: 'January 23rd, 2024',
                 },
                 {
-                    id: 2,
+                    id: "RasberryPi5",
                     title: 'Rasberry Pi 5',
                     description: 'Used to host this website. I SSH into the Pi using certificates I configured to update the website and manage the server.',
-                    imageName: 'pi.png', // image credit: https://iconduck.com/icons/14184/raspberry-pi
+                    imageName: 'pi.png', // image credit:
                     created: 'Febrary 21st, 2024',
                     updated: 'Febrary 24th, 2024',
                 },
@@ -46,7 +46,8 @@ export default {
     },
     methods: {
         goToProject(projectId) {
-            this.$router.push({ name: 'ProjectDetail', params: { id: projectId } });
+            // Change 'id' to 'projectId' to match the route parameter name
+            this.$router.push({ name: 'ProjectDetail', params: { projectId } });
         },
     },
 };
