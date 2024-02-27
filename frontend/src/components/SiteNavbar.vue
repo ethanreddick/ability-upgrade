@@ -4,7 +4,7 @@
             <!-- Flex container to align items -->
             <div class="navbar-content d-flex justify-content-between align-items-center w-100">
                 <!-- Logo on the top left -->
-                <a class="navbar-brand" href="#">Ability Upgrade</a>
+                <router-link to="/" class="nav-item nav-link">Ability Upgrade</router-link>
 
                 <!-- Centered Navigation Buttons -->
                 <div class="navbar-nav centered-nav">
@@ -39,9 +39,19 @@ export default {
 </script>
 
 <style scoped>
+.navbar-logo {
+    font-size: 1.8em;
+    /* Increase the logo size */
+}
+
+.nav-item.nav-link {
+    font-size: 1.2em;
+    /* Increase the font size for nav items */
+}
+
 .icon {
-    color: black;
-    font-size: 24px;
+    font-size: 1.5em;
+    /* Adjust icon size to match the increased nav item size */
     margin-right: 15px;
 }
 
@@ -56,7 +66,6 @@ export default {
 
 .navbar-content {
     position: relative;
-    /* Ensure this is relative to allow absolute child positioning */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,36 +74,43 @@ export default {
 
 .centered-nav {
     position: absolute;
-    /* Use absolute positioning */
     left: 50%;
-    /* Start at the half of the container */
     transform: translateX(-50%);
-    /* Shift it back to truly center */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 @media (max-width: 992px) {
+    .navbar-logo {
+        font-size: 1.5em;
+        /* Slightly smaller size for smaller screens */
+    }
+
+    .nav-item.nav-link {
+        font-size: 1em;
+        /* Adjust font size for smaller screens */
+    }
+
+    .icon {
+        font-size: 1.2em;
+        /* Adjust icon size for smaller screens */
+    }
 
     .centered-nav,
     .navbar-nav {
         flex-direction: row !important;
-        /* Ensure row layout */
         justify-content: center;
         align-items: center;
     }
 
     .nav-item {
         display: inline-block;
-        /* Ensure inline display for items */
         margin-right: 10px;
-        /* Adjust spacing as necessary */
     }
 
     .nav-item:last-child {
         margin-right: 0;
-        /* No extra margin for the last item */
     }
 }
 </style>
