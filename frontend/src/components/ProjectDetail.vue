@@ -146,6 +146,6 @@ export default {
 
 .summary-content h1 {
     text-align: center;
-    /* Centers the title */
+    margin-bottom: 20px;
 }
 </style>
