@@ -1,63 +1,56 @@
 <template>
-    <div class="blog-page-container">
-        <div class="sidebar">
-            <!-- Sidebar Categories Bubble -->
-            <div class="categories-bubble">
-                <h2>Categories</h2>
-                <button class="category-item">Category 1</button>
-                <button class="category-item">Category 2</button>
-                <button class="clear-filters">Clear Filters</button>
+    <div class="blog-page-wrapper">
+        <div class="blog-page-container">
+            <div class="sidebar">
+                <div class="categories-bubble">
+                    <h2>Categories</h2>
+                    <button class="category-item">Category 1</button>
+                    <button class="category-item">Category 2</button>
+                    <button class="clear-filters">Clear Filters</button>
+                </div>
             </div>
-        </div>
-        <div class="blog-listings">
-            <!-- Control Bubble for Search, Sorting, and Showing per Page -->
-            <div class="controls-bubble">
-                <input type="text" placeholder="Search..." class="search-input" />
-                <select class="sort-dropdown">
-                    <option value="newest">Newest First</option>
-                    <option value="oldest">Oldest First</option>
-                </select>
-                <select class="show-per-page-dropdown" v-model="postsPerPage" @change="changePostsPerPage">
-                    <option value="10">10 per page</option>
-                    <option value="20">20 per page</option>
-                </select>
-            </div>
+            <div class="blog-listings">
+                <div class="controls-bubble">
+                    <input type="text" placeholder="Search..." class="search-input" />
+                    <select class="sort-dropdown">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                    <select class="show-per-page-dropdown" v-model="postsPerPage" @change="changePostsPerPage">
+                        <option value="10">10 per page</option>
+                        <option value="20">20 per page</option>
+                    </select>
+                </div>
 
-            <!-- Pagination Controls -->
-            <div class="pagination-controls">
-                <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
-                <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                    :class="{ 'active-page': currentPage === page }">
-                    {{ page }}
-                </button>
-                <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
-            </div>
+                <div class="pagination-controls">
+                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                        class="arrow-button">&#8592;</button>
+                    <button v-for="page in totalPages" :key="page" @click="changePage(page)"
+                        :class="{ 'page-button': true, 'active-page': currentPage === page }">{{ page }}</button>
+                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                        class="arrow-button">&#8594;</button>
+                </div>
 
-            <!-- Blog Listings -->
-            <div class="content-listings">
-                <div v-for="blogPost in paginatedBlogPosts" :key="blogPost.id" class="blog-detail-style">
-                    <div class="blog-image-container">
-                        <img :src="require(`@/assets/${blogPost.imageName}`)" alt="Blog Image" class="blog-main-image" />
-                    </div>
-                    <div class="blog-content">
-                        <h1>{{ blogPost.title }}</h1>
-                        <p>{{ blogPost.description }}</p>
-                        <div class="blog-dates">
-                            <p>Created: {{ blogPost.created }}</p>
-                            <p>Updated: {{ blogPost.updated }}</p>
+                <div class="content-listings">
+                    <div v-for="blogPost in paginatedBlogPosts" :key="blogPost.id" class="blog-detail-style">
+                        <div class="blog-image-container">
+                            <img :src="require(`@/assets/${blogPost.imageName}`)" alt="Blog Image"
+                                class="blog-main-image" />
+                        </div>
+                        <div class="blog-content">
+                            <h1>{{ blogPost.title }}</h1>
+                            <p>{{ blogPost.description }}</p>
+                            <p>{{ blogPost.date }}</p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Repeat Pagination Controls for Bottom -->
-            <div class="pagination-controls">
-                <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
-                <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                    :class="{ 'active-page': currentPage === page }">
-                    {{ page }}
-                </button>
-                <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
+                <div class="pagination-controls">
+                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
+                    <button v-for="page in totalPages" :key="page" @click="changePage(page)"
+                        :class="{ 'active-page': currentPage === page }">{{ page }}</button>
+                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
+                </div>
             </div>
         </div>
     </div>
@@ -91,7 +84,7 @@ export default {
             this.currentPage = page;
         },
         changePostsPerPage() {
-            this.currentPage = 1; // Reset to first page to avoid empty page views
+            this.currentPage = 1; // Reset to the first page to avoid empty page views
         },
     },
 };
@@ -100,16 +93,23 @@ export default {
 <style scoped>
 .active-page {
     background-color: #ddd;
-    /* or any color that indicates active state */
+    /* or any color that indicates an active state */
     border-color: #bbb;
     /* slightly darker border for contrast */
 }
 
+.blog-page-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .blog-page-container {
     display: flex;
-    justify-content: flex-start;
+    max-width: 1280px;
+    width: 100%;
     padding: 20px;
-    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .sidebar {
@@ -158,7 +158,33 @@ export default {
 .pagination-controls {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    align-items: center;
+}
+
+.page-button,
+.arrow-button {
+    padding: 5px 15px;
+    /* Adjusted for a pill-shaped design */
+    margin: 0 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    /* Adjusted for a pill-shaped design */
+    cursor: pointer;
+    text-align: center;
+}
+
+.arrow-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+    color: #aaa;
+    /* Shades the arrow when disabled */
 }
 
 .content-listings {
@@ -172,7 +198,7 @@ export default {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
     /* Blog details match the controls bubble width */
 }
@@ -192,10 +218,9 @@ export default {
     flex-direction: column;
 }
 
-.blog-dates {
+.blog-date {
     font-size: 0.9em;
     color: #666;
-    margin-top: 10px;
     /* Add space between description and dates */
 }
 </style>

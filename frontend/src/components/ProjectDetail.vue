@@ -1,30 +1,33 @@
 <template>
-    <div v-if="project">
-        <div class="project-image-container">
-            <img :src="require(`@/assets/${project.imageName}`)" alt="Project Image" class="project-main-image" />
-        </div>
-        <div class="project-detail-container">
-            <div class="sub-navbar">
-                <div class="slider-background" :style="{ 'left': sliderLeft + 'px', 'width': sliderWidth + 'px' }"></div>
-                <button v-for="tab in tabs" :key="tab.id" @click="selectTab(tab.id, $event)"
-                    :class="{ 'active': tab.id === selectedTab }">{{ tab.name }}</button>
+    <div class="max-width-container">
+        <div v-if="project">
+            <div class="project-image-container">
+                <img :src="require(`@/assets/${project.imageName}`)" alt="Project Image" class="project-main-image" />
             </div>
-            <div class="content-section">
-                <div v-if="selectedTab === 'summary'" class="content-section summary-content">
-                    <h1>{{ project.title }}</h1>
-                    <p>{{ project.descriptionLong }}</p>
+            <div class="project-detail-container">
+                <div class="sub-navbar">
+                    <div class="slider-background" :style="{ 'left': sliderLeft + 'px', 'width': sliderWidth + 'px' }">
+                    </div>
+                    <button v-for="tab in tabs" :key="tab.id" @click="selectTab(tab.id, $event)"
+                        :class="{ 'active': tab.id === selectedTab }">{{ tab.name }}</button>
                 </div>
-                <div v-if="selectedTab === 'gallery'">
-                    <!-- Gallery content here -->
-                </div>
-                <div v-if="selectedTab === 'references'">
-                    <!-- References content here -->
+                <div class="content-section">
+                    <div v-if="selectedTab === 'summary'" class="content-section summary-content">
+                        <h1>{{ project.title }}</h1>
+                        <p>{{ project.descriptionLong }}</p>
+                    </div>
+                    <div v-if="selectedTab === 'gallery'">
+                        <!-- Gallery content here -->
+                    </div>
+                    <div v-if="selectedTab === 'references'">
+                        <!-- References content here -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div v-else>
-        <p>Project not found.</p>
+        <div v-else>
+            <p>Project not found.</p>
+        </div>
     </div>
 </template>
 
@@ -85,6 +88,13 @@ export default {
 
 
 <style scoped>
+.max-width-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 .sub-navbar {
     display: flex;
     justify-content: center;
