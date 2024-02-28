@@ -2,27 +2,41 @@
     <div class="blog-page-wrapper">
         <div class="blog-page-container">
             <div class="sidebar">
+                <!-- Category Selector -->
                 <div class="categories-bubble">
                     <h2>Categories</h2>
-                    <button class="category-item">Category 1</button>
-                    <button class="category-item">Category 2</button>
-                    <button class="clear-filters">Clear Filters</button>
+                    <div v-for="tag in availableTags" :key="tag" class="category-item">
+                        <input type="checkbox" :id="tag" :value="tag" v-model="selectedTags">
+                        <label :for="tag">{{ tag }}</label>
+                    </div>
+                    <button class="clear-filters" @click="clearFilters">Clear Filters</button>
                 </div>
             </div>
             <div class="blog-listings">
+                <!-- Display Preference Controls -->
                 <div class="controls-bubble">
-                    <input type="text" placeholder="Search..." class="search-input" />
-                    <select class="sort-dropdown">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                    </select>
-                    <select class="show-per-page-dropdown" v-model="postsPerPage" @change="changePostsPerPage">
-                        <option value="10">10 per page</option>
-                        <option value="20">20 per page</option>
-                    </select>
+                    <div class="search-container">
+                        <input type="text" placeholder="Search..." class="search-input" />
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+                    <div class="sort-container">
+                        <label for="sort-dropdown">Sort by</label>
+                        <select id="sort-dropdown" class="sort-dropdown">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+                    </div>
+                    <div class="show-per-page-container">
+                        <label for="show-per-page-dropdown">Show per page</label>
+                        <select id="show-per-page-dropdown" class="show-per-page-dropdown" v-model="postsPerPage"
+                            @change="changePostsPerPage">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="pagination-controls">
+                <!-- Top Pagination Controls -->
+                <div v-if="paginatedBlogPosts.length > 0" class="pagination-controls">
                     <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
                         class="arrow-button">&#8592;</button>
                     <button v-for="page in totalPages" :key="page" @click="changePage(page)"
@@ -30,26 +44,31 @@
                     <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
                         class="arrow-button">&#8594;</button>
                 </div>
-
+                <!-- Blog Post Listings -->
                 <div class="content-listings">
-                    <div v-for="blogPost in paginatedBlogPosts" :key="blogPost.id" class="blog-detail-style">
-                        <div class="blog-image-container">
-                            <img :src="require(`@/assets/${blogPost.imageName}`)" alt="Blog Image"
-                                class="blog-main-image" />
-                        </div>
-                        <div class="blog-content">
-                            <h1>{{ blogPost.title }}</h1>
-                            <p>{{ blogPost.description }}</p>
-                            <p>{{ blogPost.date }}</p>
+                    <div v-if="paginatedBlogPosts.length > 0">
+                        <div v-for="blogPost in paginatedBlogPosts" :key="blogPost.id" class="blog-detail-style">
+                            <div class="blog-image-container">
+                                <img :src="require(`@/assets/${blogPost.imageName}`)" alt="Blog Image"
+                                    class="blog-main-image" />
+                            </div>
+                            <div class="blog-content">
+                                <h1>{{ blogPost.title }}</h1>
+                                <p>{{ blogPost.description }}</p>
+                                <p>{{ blogPost.date }}</p>
+                            </div>
                         </div>
                     </div>
+                    <p v-else class="no-posts-message">No blog posts matching those filters.</p>
                 </div>
-
-                <div class="pagination-controls">
-                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
+                <!-- Bottom Pagination Controls -->
+                <div v-if="paginatedBlogPosts.length > 0" class="pagination-controls">
+                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                        class="arrow-button">&#8592;</button>
                     <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                        :class="{ 'active-page': currentPage === page }">{{ page }}</button>
-                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
+                        :class="{ 'page-button': true, 'active-page': currentPage === page }">{{ page }}</button>
+                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                        class="arrow-button">&#8594;</button>
                 </div>
             </div>
         </div>
@@ -66,16 +85,24 @@ export default {
             blogPosts,
             currentPage: 1,
             postsPerPage: 10,
+            availableTags: ["Vue.js", "Reactivity", "Rust", "Javascript", "Python"],
+            selectedTags: [],
         };
     },
     computed: {
         totalPages() {
-            return Math.ceil(this.blogPosts.length / this.postsPerPage);
+            return Math.ceil(this.filteredBlogPosts.length / this.postsPerPage);
+        },
+        filteredBlogPosts() {
+            if (this.selectedTags.length === 0) {
+                return this.blogPosts;
+            }
+            return this.blogPosts.filter(post => post.tags.some(tag => this.selectedTags.includes(tag)));
         },
         paginatedBlogPosts() {
             const start = (this.currentPage - 1) * this.postsPerPage;
             const end = start + this.postsPerPage;
-            return this.blogPosts.slice(start, end);
+            return this.filteredBlogPosts.slice(start, end);
         },
     },
     methods: {
@@ -85,6 +112,9 @@ export default {
         },
         changePostsPerPage() {
             this.currentPage = 1; // Reset to the first page to avoid empty page views
+        },
+        clearFilters() {
+            this.selectedTags = [];
         },
     },
 };
@@ -104,6 +134,30 @@ export default {
     width: 100%;
 }
 
+.no-posts-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.0em;
+    color: #666;
+}
+
+.categories-bubble {
+    border-radius: 15px;
+    /* Rounded corners for the bubble effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for 3D effect */
+    padding: 20px;
+    /* Spacing inside the bubble */
+    margin-bottom: 20px;
+    /* Space below the bubble */
+    width: 100%;
+    /* Full width of its container */
+    display: flex;
+    /* Flexbox for internal alignment */
+    flex-direction: column;
+    /* Stack items vertically */
+}
+
 .blog-page-container {
     display: flex;
     max-width: 1280px;
@@ -118,22 +172,40 @@ export default {
     /* Ensure space between sidebar and blog listings */
 }
 
-.categories-bubble,
 .controls-bubble {
-    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
-    /* Make sure these elements take the full width of their container */
 }
 
-.category-item,
-.clear-filters {
-    display: block;
+.search-container,
+.sort-container,
+.show-per-page-container {
+    display: flex;
+    align-items: center;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
     margin: 10px 0;
-    cursor: pointer;
+}
+
+.category-item input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.sort-dropdown,
+.show-per-page-dropdown {
+    margin: 0 10px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .blog-listings {
@@ -146,14 +218,24 @@ export default {
     /* Ensure blog listings don't exceed 75% of the container width */
 }
 
-.search-input,
-.sort-dropdown,
-.show-per-page-dropdown {
-    margin: 0 10px;
+.search-input {
+    margin-right: 10px;
+    /* Adjust spacing */
     padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    flex-grow: 1;
+    /* Allows the search input to fill the space */
 }
+
+.search-icon {
+    color: #ccc;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 
 .pagination-controls {
     display: flex;
@@ -194,13 +276,23 @@ export default {
 
 .blog-detail-style {
     display: flex;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Match this color with the project bubble color */
+    border-radius: 15px;
+    /* Match the border-radius from ProjectsPage.vue */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Initial shadow */
     margin: 10px 0;
     padding: 10px;
     width: 100%;
-    /* Blog details match the controls bubble width */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /* Smooth transition for hover effect */
+}
+
+.blog-detail-style:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* Enhanced shadow for raised effect */
+    transform: translateY(-5px);
+    /* Slightly lift the element */
 }
 
 .blog-image-container {

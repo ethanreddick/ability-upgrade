@@ -46,20 +46,17 @@ export default {
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #f9f9f9;
-    /* Light background color for the bubble */
     border-radius: 15px;
     /* Rounded corners for the bubble effect */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
-    /* Adjust padding as necessary to fit your design */
 }
 
 .navbar {
-    background-color: transparent;
-    /* Make navbar background transparent */
+    background-color: transparent !important;
+    /* Override any other background styles */
     border: none;
-    /* Remove any borders */
+    box-shadow: none;
+    /* Remove box-shadow if any */
 }
 
 .navbar-logo {

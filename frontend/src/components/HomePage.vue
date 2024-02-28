@@ -1,14 +1,17 @@
 <template>
-    <div class="home-container">
-        <!-- Picture on the left -->
-        <div class="profile-pic">
-            <img src="@/assets/picture.jpeg" alt="Ethan">
-        </div>
-        <!-- Blurb on the right -->
-        <div class="profile-blurb">
-            <h2>Welcome</h2>
-            <p>This is a short blurb about who I am and the reason for making this site. Here you can introduce yourself,
-                your profession, your goals with the site, and any other introductory information you wish to share.</p>
+    <div class="max-width-container">
+        <div class="home-container">
+            <!-- Picture on the left -->
+            <div class="profile-pic">
+                <img src="../assets/hereICome.png" alt="Ethan">
+            </div>
+            <!-- Blurb on the right -->
+            <div class="profile-blurb">
+                <h2>Welcome!</h2>
+                <p>My name is Ethan Reddick and this is my personal site that I use for my blog and to showcase
+                    some of my projects. I am a newly commissioned Cyber officer in the Georgia Army National Guard who
+                    loves building things with software and keeping them safe.</p>
+            </div>
         </div>
     </div>
 </template>
@@ -20,6 +23,13 @@ export default {
 </script>
 
 <style scoped>
+.max-width-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 .home-container {
     display: flex;
     align-items: center;

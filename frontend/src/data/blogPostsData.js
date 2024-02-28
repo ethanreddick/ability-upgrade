@@ -8,6 +8,7 @@ export const blogPosts = [
       "A deep dive into how Vue.js manages reactivity, and how you can leverage it for efficient data updates.",
     imageName: "nas.png", // Example image name
     date: "March 10th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "2",
@@ -16,6 +17,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "3",
@@ -24,6 +26,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "4",
@@ -32,6 +35,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "5",
@@ -40,6 +44,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "6",
@@ -48,6 +53,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "7",
@@ -56,6 +62,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "8",
@@ -64,6 +71,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "9",
@@ -72,6 +80,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "10",
@@ -80,6 +89,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   {
     id: "11",
@@ -88,6 +98,7 @@ export const blogPosts = [
       "Step-by-step guide to building a blog from scratch using Vue.js and Vue Router for beginners.",
     imageName: "search.png", // Example image name
     date: "March 20th, 2024",
+    tags: ["Vue.js", "Reactivity"],
   },
   // Add more blog posts as needed
 ];
