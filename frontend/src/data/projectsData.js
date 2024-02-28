@@ -26,7 +26,7 @@ export const projects = [
     id: "Search",
     title: "Search Capstone",
     description:
-      "A search enginge I developed in Python. The hardest part was building an effective \
+      "A search engine I developed in Python. The hardest part was building an effective \
       web crawler due to the scale of the internet. This fed into a PostgreSQL \
       database which the GUI queried.",
     descriptionLong: "",

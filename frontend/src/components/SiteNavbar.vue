@@ -9,7 +9,7 @@
                 <!-- Centered Navigation Buttons -->
                 <div class="navbar-nav centered-nav">
                     <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <a class="nav-item nav-link" href="#">Blog</a>
+                    <router-link to="/blog" class="nav-item nav-link">Blog</router-link>
                     <router-link to="/projects" class="nav-item nav-link">Projects</router-link>
                 </div>
 

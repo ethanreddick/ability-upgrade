@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../components/HomePage.vue";
 import ProjectsPage from "../components/ProjectsPage.vue";
-import ProjectDetail from "../components/ProjectDetail.vue"; // Import the ProjectDetail component
+import ProjectDetail from "../components/ProjectDetail.vue";
+import BlogPage from "../components/BlogPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,6 +22,11 @@ const router = createRouter({
       name: "ProjectDetail",
       component: ProjectDetail,
       props: true, // Enables the route parameter `projectId` to be passed as a prop to the component
+    },
+    {
+      path: "/blog",
+      name: "Blog",
+      component: BlogPage,
     },
   ],
 });
