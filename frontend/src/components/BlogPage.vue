@@ -19,12 +19,12 @@
                 <!-- Display Preference Controls -->
                 <div class="controls-bubble">
                     <div class="search-container">
-                        <input type="text" placeholder="Search..." class="search-input" />
+                        <input type="text" placeholder="Search..." class="search-input" v-model="searchQuery" />
                         <i class="fa fa-search search-icon"></i>
                     </div>
                     <div class="sort-container">
                         <label for="sort-dropdown">Sort by</label>
-                        <select id="sort-dropdown" class="sort-dropdown">
+                        <select id="sort-dropdown" class="sort-dropdown" v-model="sortOrder" @change="updateSortOrder">
                             <option value="newest">Newest First</option>
                             <option value="oldest">Oldest First</option>
                         </select>
@@ -58,7 +58,7 @@
                             <div class="blog-content">
                                 <h1>{{ blogPost.title }}</h1>
                                 <p>{{ blogPost.description }}</p>
-                                <p>{{ blogPost.date }}</p>
+                                <p>{{ formatDate(blogPost.date) }}</p>
                             </div>
                         </div>
                     </div>
@@ -90,17 +90,39 @@ export default {
             postsPerPage: 10,
             availableTags: ["Security", "Networking", "News"],
             selectedTags: [],
+            searchQuery: '',
+            sortOrder: 'newest', // default sort order
         };
     },
+
     computed: {
         totalPages() {
             return Math.ceil(this.filteredBlogPosts.length / this.postsPerPage);
         },
         filteredBlogPosts() {
-            if (this.selectedTags.length === 0) {
-                return this.blogPosts;
+            let filtered = this.blogPosts;
+
+            // Filter by tags
+            if (this.selectedTags.length > 0) {
+                filtered = filtered.filter(post => post.tags.some(tag => this.selectedTags.includes(tag)));
             }
-            return this.blogPosts.filter(post => post.tags.some(tag => this.selectedTags.includes(tag)));
+
+            // Filter by search query
+            if (this.searchQuery) {
+                filtered = filtered.filter(post =>
+                    post.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    post.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+                );
+            }
+
+            // Sort by date
+            filtered = filtered.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return this.sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+            });
+
+            return filtered;
         },
         paginatedBlogPosts() {
             const start = (this.currentPage - 1) * this.postsPerPage;
@@ -108,6 +130,7 @@ export default {
             return this.filteredBlogPosts.slice(start, end);
         },
     },
+
     methods: {
         changePage(page) {
             if (page < 1 || page > this.totalPages) return;
@@ -118,6 +141,26 @@ export default {
         },
         clearFilters() {
             this.selectedTags = [];
+        },
+        updateSortOrder(event) {
+            this.sortOrder = event.target.value;
+        },
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            let formattedDate = date.toLocaleDateString('en-US', options);
+
+            // Add the suffix for the day (this is not working yet)
+            const day = date.getDate();
+            let suffix = 'th';
+            if (day < 11 || day > 20) {
+                switch (day % 10) {
+                    case 1: suffix = 'st'; break;
+                    case 2: suffix = 'nd'; break;
+                    case 3: suffix = 'rd'; break;
+                }
+            }
+            return formattedDate.replace(new RegExp(' ' + (day + 1) + ' '), ` ${day}${suffix} `);
         },
     },
 };
