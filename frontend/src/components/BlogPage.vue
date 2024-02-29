@@ -5,13 +5,16 @@
                 <!-- Category Selector -->
                 <div class="categories-bubble">
                     <h2>Categories</h2>
+                    <div class="clear-filters-container">
+                        <button class="clear-filters" @click="clearFilters">Clear Filters</button>
+                    </div>
                     <div v-for="tag in availableTags" :key="tag" class="category-item">
                         <input type="checkbox" :id="tag" :value="tag" v-model="selectedTags">
                         <label :for="tag">{{ tag }}</label>
                     </div>
-                    <button class="clear-filters" @click="clearFilters">Clear Filters</button>
                 </div>
             </div>
+
             <div class="blog-listings">
                 <!-- Display Preference Controls -->
                 <div class="controls-bubble">
@@ -59,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <p v-else class="no-posts-message">No blog posts matching those filters.</p>
+                    <p v-else class="no-posts-message">No blog posts match those filters.</p>
                 </div>
                 <!-- Bottom Pagination Controls -->
                 <div v-if="paginatedBlogPosts.length > 0" class="pagination-controls">
@@ -85,7 +88,7 @@ export default {
             blogPosts,
             currentPage: 1,
             postsPerPage: 10,
-            availableTags: ["Vue.js", "Reactivity", "Rust", "Javascript", "Python"],
+            availableTags: ["Security", "Networking", "News"],
             selectedTags: [],
         };
     },
@@ -156,6 +159,41 @@ export default {
     /* Flexbox for internal alignment */
     flex-direction: column;
     /* Stack items vertically */
+}
+
+.clear-filters-container {
+    margin-bottom: 10px;
+    /* Spacing below the button */
+    text-align: left;
+    /* Center the button if needed */
+}
+
+.clear-filters {
+    background-color: #ffffff;
+    /* White background */
+    border: 1px solid #ccc;
+    /* Light grey border */
+    border-radius: 20px;
+    /* Rounded edges for bubble shape */
+    padding: 5px 15px;
+    /* Padding for smaller button size */
+    cursor: pointer;
+    /* Cursor changes to pointer on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for 3D effect */
+    font-size: 0.9em;
+    /* Smaller font size */
+    color: #333;
+    /* Darker font color for contrast */
+    transition: background-color 0.3s, transform 0.2s;
+    /* Smooth transition for hover effects */
+}
+
+.clear-filters:hover {
+    background-color: #e6e6e6;
+    /* Slightly darker background on hover */
+    transform: translateY(-2px);
+    /* Lift the button on hover */
 }
 
 .blog-page-container {
