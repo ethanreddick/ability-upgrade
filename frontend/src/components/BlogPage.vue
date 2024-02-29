@@ -146,12 +146,14 @@ export default {
             this.sortOrder = event.target.value;
         },
         formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const date = new Date(dateString);
-            let formattedDate = date.toLocaleDateString('en-US', options);
 
-            // Add the suffix for the day (this is not working yet)
-            const day = date.getDate();
+            // Extracting individual parts of the date
+            const year = date.getFullYear();
+            const month = date.toLocaleString('en-US', { month: 'long' });
+            const day = date.getDate() + 1;
+
+            // Determining the suffix of the day
             let suffix = 'th';
             if (day < 11 || day > 20) {
                 switch (day % 10) {
@@ -160,7 +162,9 @@ export default {
                     case 3: suffix = 'rd'; break;
                 }
             }
-            return formattedDate.replace(new RegExp(' ' + (day + 1) + ' '), ` ${day}${suffix} `);
+
+            // Constructing the formatted date string manually
+            return `${month} ${day}${suffix}, ${year}`;
         },
     },
 };

@@ -10,14 +10,5 @@ export const blogPosts = [
     date: "2024-02-28",
     tags: [""],
   },
-  {
-    id: "2",
-    title: "Giraffe",
-    description: "Boots with the fur",
-    descriptionLong: "",
-    imageName: "nas.png",
-    date: "2024-02-29",
-    tags: [""],
-  },
   // Add more blog posts as needed
 ];
