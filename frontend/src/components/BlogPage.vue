@@ -6,10 +6,21 @@
                 <div class="categories-bubble">
                     <h2>Categories</h2>
                     <div class="clear-filters-container">
-                        <button class="clear-filters" @click="clearFilters">Clear Filters</button>
+                        <button class="clear-filters" @click="clearFilters">
+                            Clear Filters
+                        </button>
                     </div>
-                    <div v-for="tag in availableTags" :key="tag" class="category-item">
-                        <input type="checkbox" :id="tag" :value="tag" v-model="selectedTags">
+                    <div
+                        v-for="tag in availableTags"
+                        :key="tag"
+                        class="category-item"
+                    >
+                        <input
+                            type="checkbox"
+                            :id="tag"
+                            :value="tag"
+                            v-model="selectedTags"
+                        />
                         <label :for="tag">{{ tag }}</label>
                     </div>
                 </div>
@@ -19,41 +30,91 @@
                 <!-- Display Preference Controls -->
                 <div class="controls-bubble">
                     <div class="search-container">
-                        <input type="text" placeholder="Search..." class="search-input" v-model="searchQuery" />
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            class="search-input"
+                            v-model="searchQuery"
+                        />
                         <i class="fa fa-search search-icon"></i>
                     </div>
                     <div class="sort-container">
                         <label for="sort-dropdown">Sort by</label>
-                        <select id="sort-dropdown" class="sort-dropdown" v-model="sortOrder" @change="updateSortOrder">
+                        <select
+                            id="sort-dropdown"
+                            class="sort-dropdown"
+                            v-model="sortOrder"
+                            @change="updateSortOrder"
+                        >
                             <option value="newest">Newest First</option>
                             <option value="oldest">Oldest First</option>
                         </select>
                     </div>
                     <div class="show-per-page-container">
-                        <label for="show-per-page-dropdown">Show per page</label>
-                        <select id="show-per-page-dropdown" class="show-per-page-dropdown" v-model="postsPerPage"
-                            @change="changePostsPerPage">
+                        <label for="show-per-page-dropdown"
+                            >Show per page</label
+                        >
+                        <select
+                            id="show-per-page-dropdown"
+                            class="show-per-page-dropdown"
+                            v-model="postsPerPage"
+                            @change="changePostsPerPage"
+                        >
                             <option value="10">10</option>
                             <option value="20">20</option>
                         </select>
                     </div>
                 </div>
                 <!-- Top Pagination Controls -->
-                <div v-if="paginatedBlogPosts.length > 0" class="pagination-controls">
-                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
-                        class="arrow-button">&#8592;</button>
-                    <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                        :class="{ 'page-button': true, 'active-page': currentPage === page }">{{ page }}</button>
-                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
-                        class="arrow-button">&#8594;</button>
+                <div
+                    v-if="paginatedBlogPosts.length > 0"
+                    class="pagination-controls"
+                >
+                    <button
+                        @click="changePage(currentPage - 1)"
+                        :disabled="currentPage === 1"
+                        class="arrow-button"
+                    >
+                        &#8592;
+                    </button>
+                    <button
+                        v-for="page in totalPages"
+                        :key="page"
+                        @click="changePage(page)"
+                        :class="{
+                            'page-button': true,
+                            'active-page': currentPage === page,
+                        }"
+                    >
+                        {{ page }}
+                    </button>
+                    <button
+                        @click="changePage(currentPage + 1)"
+                        :disabled="currentPage === totalPages"
+                        class="arrow-button"
+                    >
+                        &#8594;
+                    </button>
                 </div>
                 <!-- Blog Post Listings -->
                 <div class="content-listings">
                     <div v-if="paginatedBlogPosts.length > 0">
-                        <div v-for="blogPost in paginatedBlogPosts" :key="blogPost.id" class="blog-detail-style">
+                        <div
+                            v-for="blogPost in paginatedBlogPosts"
+                            :key="blogPost.id"
+                            @click="navigateToPost(blogPost.id)"
+                            class="blog-detail-style"
+                        >
                             <div class="blog-image-container">
-                                <img :src="require(`@/assets/${blogPost.imageName}`)" alt="Blog Image"
-                                    class="blog-main-image" />
+                                <img
+                                    :src="
+                                        require(
+                                            `@/assets/${blogPost.imageName}`,
+                                        )
+                                    "
+                                    alt="Blog Image"
+                                    class="blog-main-image"
+                                />
                             </div>
                             <div class="blog-content">
                                 <h1>{{ blogPost.title }}</h1>
@@ -62,16 +123,40 @@
                             </div>
                         </div>
                     </div>
-                    <p v-else class="no-posts-message">No blog posts match those filters.</p>
+                    <p v-else class="no-posts-message">
+                        No blog posts match those filters.
+                    </p>
                 </div>
                 <!-- Bottom Pagination Controls -->
-                <div v-if="paginatedBlogPosts.length > 0" class="pagination-controls">
-                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
-                        class="arrow-button">&#8592;</button>
-                    <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                        :class="{ 'page-button': true, 'active-page': currentPage === page }">{{ page }}</button>
-                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
-                        class="arrow-button">&#8594;</button>
+                <div
+                    v-if="paginatedBlogPosts.length > 0"
+                    class="pagination-controls"
+                >
+                    <button
+                        @click="changePage(currentPage - 1)"
+                        :disabled="currentPage === 1"
+                        class="arrow-button"
+                    >
+                        &#8592;
+                    </button>
+                    <button
+                        v-for="page in totalPages"
+                        :key="page"
+                        @click="changePage(page)"
+                        :class="{
+                            'page-button': true,
+                            'active-page': currentPage === page,
+                        }"
+                    >
+                        {{ page }}
+                    </button>
+                    <button
+                        @click="changePage(currentPage + 1)"
+                        :disabled="currentPage === totalPages"
+                        class="arrow-button"
+                    >
+                        &#8594;
+                    </button>
                 </div>
             </div>
         </div>
@@ -79,10 +164,10 @@
 </template>
 
 <script>
-import { blogPosts } from '@/data/blogPostsData.js';
+import { blogPosts } from "@/data/blogPostsData.js";
 
 export default {
-    name: 'BlogPage',
+    name: "BlogPage",
     data() {
         return {
             blogPosts,
@@ -90,8 +175,8 @@ export default {
             postsPerPage: 10,
             availableTags: ["Security", "Networking", "News"],
             selectedTags: [],
-            searchQuery: '',
-            sortOrder: 'newest', // default sort order
+            searchQuery: "",
+            sortOrder: "newest", // default sort order
         };
     },
 
@@ -104,14 +189,21 @@ export default {
 
             // Filter by tags
             if (this.selectedTags.length > 0) {
-                filtered = filtered.filter(post => post.tags.some(tag => this.selectedTags.includes(tag)));
+                filtered = filtered.filter((post) =>
+                    post.tags.some((tag) => this.selectedTags.includes(tag)),
+                );
             }
 
             // Filter by search query
             if (this.searchQuery) {
-                filtered = filtered.filter(post =>
-                    post.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    post.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+                filtered = filtered.filter(
+                    (post) =>
+                        post.title
+                            .toLowerCase()
+                            .includes(this.searchQuery.toLowerCase()) ||
+                        post.description
+                            .toLowerCase()
+                            .includes(this.searchQuery.toLowerCase()),
                 );
             }
 
@@ -119,7 +211,9 @@ export default {
             filtered = filtered.sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
-                return this.sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+                return this.sortOrder === "newest"
+                    ? dateB - dateA
+                    : dateA - dateB;
             });
 
             return filtered;
@@ -137,7 +231,7 @@ export default {
             this.currentPage = page;
         },
         changePostsPerPage() {
-            this.currentPage = 1; // Reset to the first page to avoid empty page views
+            this.currentPage = 1; // Reset to the first page to avoid empty panpmge views
         },
         clearFilters() {
             this.selectedTags = [];
@@ -150,21 +244,30 @@ export default {
 
             // Extracting individual parts of the date
             const year = date.getFullYear();
-            const month = date.toLocaleString('en-US', { month: 'long' });
+            const month = date.toLocaleString("en-US", { month: "long" });
             const day = date.getDate() + 1;
 
             // Determining the suffix of the day
-            let suffix = 'th';
+            let suffix = "th";
             if (day < 11 || day > 20) {
                 switch (day % 10) {
-                    case 1: suffix = 'st'; break;
-                    case 2: suffix = 'nd'; break;
-                    case 3: suffix = 'rd'; break;
+                    case 1:
+                        suffix = "st";
+                        break;
+                    case 2:
+                        suffix = "nd";
+                        break;
+                    case 3:
+                        suffix = "rd";
+                        break;
                 }
             }
 
             // Constructing the formatted date string manually
             return `${month} ${day}${suffix}, ${year}`;
+        },
+        navigateToPost(postId) {
+            this.$router.push({ name: "BlogPostDetail", params: { postId } });
         },
     },
 };
@@ -187,7 +290,7 @@ export default {
 .no-posts-message {
     text-align: center;
     padding: 20px;
-    font-size: 1.0em;
+    font-size: 1em;
     color: #666;
 }
 
@@ -209,6 +312,7 @@ export default {
 }
 
 .clear-filters-container {
+    margin-top: 10px;
     margin-bottom: 10px;
     /* Spacing below the button */
     text-align: left;
@@ -232,7 +336,9 @@ export default {
     /* Smaller font size */
     color: #333;
     /* Darker font color for contrast */
-    transition: background-color 0.3s, transform 0.2s;
+    transition:
+        background-color 0.3s,
+        transform 0.2s;
     /* Smooth transition for hover effects */
 }
 
@@ -321,7 +427,6 @@ export default {
     transform: translateY(-50%);
 }
 
-
 .pagination-controls {
     display: flex;
     justify-content: center;
@@ -369,8 +474,10 @@ export default {
     margin: 10px 0;
     padding: 10px;
     width: 100%;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    /* Smooth transition for hover effect */
+    transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+    cursor: pointer;
 }
 
 .blog-detail-style:hover {

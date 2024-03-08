@@ -3,6 +3,7 @@ import HomePage from "../components/HomePage.vue";
 import ProjectsPage from "../components/ProjectsPage.vue";
 import ProjectDetail from "../components/ProjectDetail.vue";
 import BlogPage from "../components/BlogPage.vue";
+import BlogPostDetail from "../components/BlogPostDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,6 +28,12 @@ const router = createRouter({
       path: "/blog",
       name: "Blog",
       component: BlogPage,
+    },
+    {
+      path: "/blog/:postId",
+      name: "BlogPostDetail",
+      component: BlogPostDetail,
+      props: true,
     },
   ],
 });

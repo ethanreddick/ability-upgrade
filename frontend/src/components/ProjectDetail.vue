@@ -2,25 +2,47 @@
     <div class="max-width-container">
         <div v-if="project">
             <div class="project-image-container">
-                <img :src="require(`@/assets/${project.imageName}`)" alt="Project Image" class="project-main-image" />
+                <img
+                    :src="require(`@/assets/${project.imageName}`)"
+                    alt="Project Image"
+                    class="project-main-image"
+                />
             </div>
             <div class="project-detail-container">
                 <div class="sub-navbar">
-                    <div class="slider-background" :style="{ 'left': sliderLeft + 'px', 'width': sliderWidth + 'px' }">
-                    </div>
-                    <button v-for="tab in tabs" :key="tab.id" @click="selectTab(tab.id, $event)"
-                        :class="{ 'active': tab.id === selectedTab }">{{ tab.name }}</button>
+                    <div
+                        class="slider-background"
+                        :style="{
+                            left: sliderLeft + 'px',
+                            width: sliderWidth + 'px',
+                        }"
+                    ></div>
+                    <button
+                        v-for="tab in tabs"
+                        :key="tab.id"
+                        @click="selectTab(tab.id, $event)"
+                        :class="{ active: tab.id === selectedTab }"
+                    >
+                        {{ tab.name }}
+                    </button>
                 </div>
                 <div class="content-section">
-                    <div v-if="selectedTab === 'summary'" class="content-section summary-content">
+                    <div
+                        v-if="selectedTab === 'summary'"
+                        class="content-section summary-content"
+                    >
                         <h1>{{ project.title }}</h1>
-                        <p>{{ project.descriptionLong }}</p>
+                        <div v-html="project.descriptionLong"></div>
                     </div>
                     <div v-if="selectedTab === 'gallery'">
                         <!-- Gallery content here -->
                     </div>
-                    <div v-if="selectedTab === 'references'">
-                        <!-- References content here -->
+                    <div
+                        v-if="selectedTab === 'references'"
+                        class="content-section summary-content"
+                    >
+                        <h1>References</h1>
+                        <div v-html="project.references"></div>
                     </div>
                 </div>
             </div>
@@ -32,36 +54,50 @@
 </template>
 
 <script>
-import { projects } from '../data/projectsData.js';
+import { projects } from "../data/projectsData.js";
+import MarkdownIt from "markdown-it";
+
+const md = new MarkdownIt();
+
+md.renderer.rules.code_block = (tokens, idx) => {
+    return `<div class="my-code">${tokens[idx].content}</div>`;
+};
 
 export default {
-    props: ['projectId'],
+    props: ["projectId"],
     data() {
         return {
             project: null,
-            selectedTab: 'summary',
+            selectedTab: "summary",
             tabs: [
-                { id: 'summary', name: 'Summary' },
-                { id: 'gallery', name: 'Gallery' },
-                { id: 'references', name: 'References' }
+                { id: "summary", name: "Summary" },
+                { id: "gallery", name: "Gallery" },
+                { id: "references", name: "References" },
             ],
             sliderLeft: 0,
             sliderWidth: 0,
         };
+    },
+    computed: {
+        formattedDescription() {
+            const md = new MarkdownIt();
+            return md.render(this.project.descriptionLong);
+        },
     },
     mounted() {
         this.fetchProjectDetails();
         this.$nextTick(() => {
             this.updateSliderPosition();
         });
-        window.addEventListener('resize', this.handleResize);
+        window.addEventListener("resize", this.handleResize);
     },
-    beforeUnmount() { // Use beforeDestroy() for Vue 2
-        window.removeEventListener('resize', this.handleResize);
+    beforeUnmount() {
+        // Use beforeDestroy() for Vue 2
+        window.removeEventListener("resize", this.handleResize);
     },
     methods: {
         fetchProjectDetails() {
-            const project = projects.find(p => p.id === this.projectId);
+            const project = projects.find((p) => p.id === this.projectId);
             if (project) {
                 this.project = project;
             }
@@ -72,7 +108,7 @@ export default {
         },
         updateSliderPosition(target = null) {
             if (!target) {
-                target = this.$el.querySelector('.active');
+                target = this.$el.querySelector(".active");
             }
             this.sliderLeft = target.offsetLeft;
             this.sliderWidth = target.offsetWidth;
@@ -85,7 +121,6 @@ export default {
     },
 };
 </script>
-
 
 <style scoped>
 .max-width-container {
@@ -110,7 +145,9 @@ export default {
     background-color: #e0e0e0;
     /* Lighter gray */
     border-radius: 20px;
-    transition: left 0.4s ease, width 0.2s ease;
+    transition:
+        left 0.4s ease,
+        width 0.2s ease;
     /* Smooth transition for sliding effect */
 }
 
@@ -145,13 +182,26 @@ export default {
     height: auto;
 }
 
+.summary-content p {
+    text-indent: 40px; /* Indent paragraphs */
+    text-align: justify;
+    margin: 10px 0;
+}
+
 .summary-content {
-    max-width: 600px;
-    /* Or whatever maximum width you prefer */
+    max-width: 800px;
     margin: 0 auto;
-    /* Centering */
-    margin-top: 10px;
-    margin-bottom: 20px;
+    padding: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.summary-content ul {
+    padding-left: 20px;
+}
+
+.summary-content li {
+    margin-bottom: 5px;
 }
 
 .summary-content h1 {

@@ -5,7 +5,26 @@ export const projects = [
     description:
       "A multipurpose network storage server with file sharing, multimedia streaming, and cloud \
       synchronization capabilities.",
-    descriptionLong: "[insert main description here]",
+    descriptionLong: `
+    <p>Wanting to build a machine that would allow me to both redundantly store my personal data and to host projects for my growing home network, I settled on building a Network Attached Storage device (NAS).</p>
+            <p>The parts I chose are as follows:</p>
+            <ul>
+                <li>N5105/N6005 NAS Demon Board</li>
+                <li>250GB PNY M.2 NVMe PCIe Gen3 SSD</li>
+                <li>32GB DDR4 3200MHz CL22</li>
+                <li>3x Refurbished Enterprise 10TB HDDs</li>
+            </ul>
+
+    <p>Once all the parts arrived at my house I assembled the machine, installed the TrueNAS operating system, and accessed the web interface - which I found very intuitive. One of the first hurdles I faced was that every few days when trying to access the NAS I would discover that it had been assigned a different IP address by the DHCP server running on my router. After troubleshooting this I came to the conclusion that my modem/router combo (provided by my ISP) did not support DCHP reservations, which would make it difficult to keep my network organized and the services I set up running properly. Because of this fact, I decided to purchase a mesh-wifi system (Google Nest) that I got on sale and that I knew for a fact supported DHCP reservations. Once the new system arrived I disabled the 2.4 and 5 GHz broadcasts from my old router to limit interference and set the old system's NAT to bridge mode so all traffic was simply forwarded to the Google Nest. Now that this was configured, I would be able to assign the NAS and all the services running on it static IP addresses.</p>
+
+    <p>The first service I set up on the NAS was AdGuard, which served as a DNS sinkhole.
+    Read more about this project [HERE].</p>
+    `,
+    references: `
+    <ul>
+        <li><a href="https://www.truenas.com/docs/">TrueNAS Documentation</a></li>
+    </ul>
+    `,
     imageName: "nas.png", // image source: https://www.flaticon.com/free-icon/nas_4943821
     created: "July 20th, 2023",
     updated: "January 23rd, 2024",
