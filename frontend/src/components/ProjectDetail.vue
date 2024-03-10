@@ -34,8 +34,17 @@
                         <h1>{{ project.title }}</h1>
                         <div v-html="project.descriptionLong"></div>
                     </div>
-                    <div v-if="selectedTab === 'gallery'">
-                        <!-- Gallery content here -->
+                    <div
+                        v-if="selectedTab === 'gallery'"
+                        class="gallery-container"
+                    >
+                        <img
+                            v-for="(image, index) in project.projectImages"
+                            :key="index"
+                            :src="requireImage(image)"
+                            alt="Gallery image"
+                            class="gallery-image"
+                        />
                     </div>
                     <div
                         v-if="selectedTab === 'references'"
@@ -55,13 +64,6 @@
 
 <script>
 import { projects } from "../data/projectsData.js";
-import MarkdownIt from "markdown-it";
-
-const md = new MarkdownIt();
-
-md.renderer.rules.code_block = (tokens, idx) => {
-    return `<div class="my-code">${tokens[idx].content}</div>`;
-};
 
 export default {
     props: ["projectId"],
@@ -77,12 +79,6 @@ export default {
             sliderLeft: 0,
             sliderWidth: 0,
         };
-    },
-    computed: {
-        formattedDescription() {
-            const md = new MarkdownIt();
-            return md.render(this.project.descriptionLong);
-        },
     },
     mounted() {
         this.fetchProjectDetails();
@@ -101,6 +97,9 @@ export default {
             if (project) {
                 this.project = project;
             }
+        },
+        requireImage(image) {
+            return require(`@/assets/${image}`);
         },
         selectTab(tabId, event) {
             this.selectedTab = tabId;
@@ -175,6 +174,20 @@ export default {
     align-items: center;
     width: 100%;
     margin-top: 10px;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Display 3 images per row */
+    gap: 10px;
+    justify-content: center; /* Center the grid items */
+    padding: 15px;
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Optional: Adjust this as needed for your images */
 }
 
 .project-main-image {

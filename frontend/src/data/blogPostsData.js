@@ -7,7 +7,7 @@ export const blogPosts = [
     description: "Apple bottom jeans",
     descriptionLong:
       "Boots with the fur, the whole club was looking at her She hit the floor  Next thing you know  Shawty got low low low low low low low low",
-    imageName: "nas.png",
+    imageName: "icons/nas.png",
     date: "2024-02-28",
     tags: [""],
   },
