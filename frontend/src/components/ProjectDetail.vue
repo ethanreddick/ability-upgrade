@@ -42,8 +42,17 @@
                             v-for="(image, index) in project.projectImages"
                             :key="index"
                             :src="requireImage(image)"
-                            alt="Gallery image"
+                            alt="Gallery Image"
                             class="gallery-image"
+                            @click="openModal(image)"
+                        />
+                    </div>
+
+                    <div v-if="showModal" class="modal" @click="closeModal">
+                        <img
+                            :src="enlargedImage"
+                            class="enlarged-image"
+                            @click.stop
                         />
                     </div>
                     <div
@@ -78,6 +87,8 @@ export default {
             ],
             sliderLeft: 0,
             sliderWidth: 0,
+            showModal: false,
+            enlargedImage: null,
         };
     },
     mounted() {
@@ -116,6 +127,14 @@ export default {
             this.$nextTick(() => {
                 this.updateSliderPosition();
             });
+        },
+        openModal(image) {
+            this.enlargedImage = this.requireImage(image);
+            this.showModal = true;
+        },
+        closeModal() {
+            this.showModal = false;
+            this.enlargedImage = null;
         },
     },
 };
@@ -220,5 +239,30 @@ export default {
 .summary-content h1 {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.enlarged-image {
+    max-width: 80%;
+    max-height: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Ensure that clicking the enlarged image doesn't close it */
+.enlarged-image:hover {
+    transform: scale(1.05);
 }
 </style>

@@ -75,8 +75,21 @@ export const projects = [
     description:
       "Using AdGuard Home, I configured a DNS sinkhole to block ads, trackers, and malware. \
       The service analyzes all network DNS requests, and returns an empty address for unwanted sites.",
-    descriptionLong: "",
+    descriptionLong:
+      "<p>AdGuard is a versatile ad-blocking software intended to remove ads from web pages, block malicious sites, and prevent tracking\
+      by online marketers. It runs as a service on my [NAS] and I set my router’s default DNS server as the address of the AdGuard service.</p>\
+      <p>This enables AdGuard to see all domains requested by devices on my network and compare them against its rule base. If the domain is to be blocked,\
+      AdGuard simply responds to the device’s DNS request with an address of 0.0.0.0, and if the domain is allowed AdGuard forwards the request to an upstream\
+      DNS resolver such as Cloudflare’s 1.1.1.1 or Google’s 8.8.8.8. These systems in-turn respond with the address of the requested resource with AdGuard\
+      passes back to the requesting device.</p>\
+      <p>By blocking unwanted content at the DNS level AdGuard can reduce network congestion and decrease loading times for certain resources.</p>",
+    references: `
+      <ul>
+          <li><a href="https://adguard.com/en/adguard-home/overview.html">AdGuard Home Overview</a></li>
+      </ul>
+      `,
     imageName: "icons/adguard.png", // image source: https://iconduck.com/icons/252880/adguard-home
+    projectImages: ["projectGallery/AdGuard/AdGuardBlocklists.png"],
     created: "July 22nd, 2023",
     updated: "July 25th, 2023",
   },

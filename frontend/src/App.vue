@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import SiteNavbar from './components/SiteNavbar.vue';
+import SiteNavbar from "./components/SiteNavbar.vue";
 
 export default {
-    name: 'App',
+    name: "App",
     components: {
-        SiteNavbar
+        SiteNavbar,
     },
 };
 </script>
@@ -22,5 +22,14 @@ export default {
     text-align: center;
     margin-top: 20px;
     /* Adds some space below the navbar */
+}
+a {
+    color: gray; /* Default color for links */
+    text-decoration: none; /* Removes underline from links */
+}
+
+a:hover {
+    color: lightgray; /* Color when hovered */
+    text-decoration: underline; /* Adds underline on hover */
 }
 </style>
