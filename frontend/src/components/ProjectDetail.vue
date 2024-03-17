@@ -38,14 +38,37 @@
                         v-if="selectedTab === 'gallery'"
                         class="gallery-container"
                     >
-                        <img
-                            v-for="(image, index) in project.projectImages"
-                            :key="index"
-                            :src="requireImage(image)"
-                            alt="Gallery Image"
-                            class="gallery-image"
-                            @click="openModal(image)"
-                        />
+                        <template v-if="project.id === 'Search'">
+                            <div class="video-container">
+                                <h2 class="gallery-title">Search Demo</h2>
+                                <video
+                                    v-if="project.projectImages.length > 0"
+                                    controls
+                                    class="gallery-video"
+                                >
+                                    <source
+                                        :src="
+                                            require(
+                                                '@/assets/' +
+                                                    project.projectImages[0],
+                                            )
+                                        "
+                                        type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <img
+                                v-for="(image, index) in project.projectImages"
+                                :key="index"
+                                :src="requireImage(image)"
+                                alt="Gallery Image"
+                                class="gallery-image"
+                                @click="openModal(image)"
+                            />
+                        </template>
                     </div>
 
                     <div v-if="showModal" class="modal" @click="closeModal">
@@ -195,18 +218,30 @@ export default {
     margin-top: 10px;
 }
 
+.gallery-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.gallery-video {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Adjust the .gallery-container for video */
 .gallery-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Display 3 images per row */
-    gap: 10px;
-    justify-content: center; /* Center the grid items */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 15px;
 }
 
 .gallery-image {
     width: 100%;
     height: auto;
-    object-fit: cover; /* Optional: Adjust this as needed for your images */
+    object-fit: cover;
 }
 
 .project-main-image {

@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Video files
+/src/assets/projectGallery/Search/SearchDemo.mp4
