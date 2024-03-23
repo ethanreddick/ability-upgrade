@@ -221,7 +221,7 @@ export default {
 .gallery-title {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 42px;
 }
 
 .gallery-video {
@@ -242,6 +242,8 @@ export default {
     width: 100%;
     height: auto;
     object-fit: cover;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .project-main-image {

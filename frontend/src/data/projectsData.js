@@ -37,14 +37,44 @@ export const projects = [
       "Served to my network by an Ubuntu VM running on my NAS, Wazuh is an open-source XDR and \
       SIEM tool used to view relevant security events and to orchestrate active response to protect \
       against threats.",
-    descriptionLong: "",
+    descriptionLong:
+      '<p>To get some hands-on practice monitoring my home network and to be able to see the attacks I \
+    conducted against my own devices from the perspective of a network defender, I installed Wazuh. \
+    Wazuh is free and open-source, and setup was super easy.</p>\
+    <p>The setup effectively contains two parts—one for the Wazuh server and the other for each device \
+    you intend to monitor on the network. To serve the Wazuh service to my network I created an Ubuntu VM \
+    on my NAS. The Wazuh server has several components which can be read about \
+    <a href="https://documentation.wazuh.com/current/getting-started/components/wazuh-server.html">here</a>.</p>\
+    <p>Once the server is setup and running each client must go through the enrollment process. Wazuh has \
+    streamlined this process, essentially you can just navigate to the “enroll new agent” section of the web \
+    interface and enter the agent operating system, IP address, and the host name. Following this, a one-line \
+    shell script is generated that is to be executed on the agent. If all the proper ports are open this should \
+    be a very smooth process.</p>\
+    <p>Once an agent is connected you can access its dashboard and see warnings and alerts it may have generated. \
+    The dashboard can show information such as compliance assessments (with regards to PCI DSS, GDPR, HIPAA, \
+    NIST 800-53, GPG13, and TSC), a breakdown of possible MITRE tactics being used on the network, and the results \
+    of past vulnerability scans (automated vulnerability scans are disabled by default but I enabled them).</p>\
+    <p>The main Wazuh dashboard provides access to classic SIEM information and provides a myriad of ways for \
+    customizing how this data is visualized. Drilling down to a specific agent you can see all its relevant \
+    events/compliance metrics and the results of automatic vulnerability scans should you choose to have enabled those. \
+    These provide insight into work that should be done to harden the systems, and over time as these vulnerabilities \
+    are worked through (starting with the most critical) the pass rate score of the system should naturally increase.</p>\
+    <p>Another interesting functionality of Wazuh is the ability to orchestrate active response to threats. For example, \
+    in the active response rules section of the configuration I added a rule that would automatically time out any IP \
+    address for 5 minutes if the host attempted to SSH into a server on the network as a user that does not exist on that \
+    system. </p>\
+    ',
     references: `
     <ul>
-        <li><a href="LINK">TEXT</a></li>
+        <li><a href="https://wazuh.com/">Wazuh</a></li>
+        <li><a href="https://documentation.wazuh.com/current/getting-started/components/wazuh-server.html">Wazuh Server Setup</a></li>
     </ul>
     `,
     imageName: "icons/wazuh.png", // image source: https://en.wikipedia.org/wiki/File:Wazuh_blue.png
-    projectImages: [""],
+    projectImages: [
+      "projectGallery/Wazuh/WazuhDashboard.png",
+      "projectGallery/Wazuh/WazuhEvents.png",
+    ],
     created: "February 4th, 2024",
     updated: "February 18th, 2024",
   },
@@ -108,10 +138,19 @@ export const projects = [
     description:
       "Used to host this website. To manage the webserver I SSH into the Pi from my \
       Macbook using certificates I configured which is far more secure than using passwords.",
-    descriptionLong: "",
+    descriptionLong:
+      '<p>I bought a Raspberry Pi 5 to host this website instead of paying for web hosting because \
+    I wanted the experience of building and hosting a website from the ground up. Aside from availability \
+    being lower since the site is hosted from a single location, I figured the web server could be more \
+    responsive with these specs than if I had paid for the web hosting that was within my budget.</p>\
+    <p>I disabled the Pi’s graphical interface and only access it via SSH using certificates I configured. \
+    I simply pull down the website’s code from the \
+    <a href="https://github.com/ethanreddick/ability-upgrade">GitHub repo</a> and run the web server from the Pi.</p>\
+    <p>[Provide update once site is fully online]</p>\
+    ',
     references: `
     <ul>
-        <li><a href="LINK">TEXT</a></li>
+        <li><a href="https://github.com/ethanreddick/ability-upgrade">Site GitHub repo</a></li>
     </ul>
     `,
     imageName: "icons/pi.png", // image source: https://iconduck.com/icons/14184/raspberry-pi
@@ -139,10 +178,7 @@ export const projects = [
       </ul>
       `,
     imageName: "icons/adguard.png", // image source: https://iconduck.com/icons/252880/adguard-home
-    projectImages: [
-      "projectGallery/AdGuard/AdGuardBlocklists.png",
-      "projectGallery/AdGuard/AdGuardBlocklists.png",
-    ],
+    projectImages: ["projectGallery/AdGuard/AdGuardBlocklists.png"],
     created: "July 22nd, 2023",
     updated: "July 25th, 2023",
   },
@@ -153,14 +189,34 @@ export const projects = [
       "Breathing new life for utility into an old laptop with 4GB of RAM my grandparents were going \
       to throw away, I installed this Linux distribution and have been having fun using it on the \
       home network.",
-    descriptionLong: "",
+    descriptionLong:
+      "<p>After installing the computer I built for one of my grandparents I was given an older Acer laptop, \
+    made around 2014. It was a machine they had used in the past that had grown too slow under the weight \
+    of its Windows 10 operating system considering it was working with only 4 GB of RAM and a HDD.</p>\
+    <p>As a fun experiment I decided to see what I could do to make this machine as capable as possible. \
+    My first move was to replace the old HDD with an SSD I had laying around and to safely dispose of the HDD. \
+    Next, I ordered a 16GB SODIMM stick at the correct speed/timing, to bump the machine up to 20GB of memory \
+    and for only about $25.</p>\
+    <p>My next move was to install Pop!_OS, a user-friendly Linux distro, onto the new SSD. After setup was \
+    complete, I was very impressed with the responsiveness of the machine compared to how it had behaved before. \
+    The only real deficiency remaining was the laptop battery which was operating at about 20% of its original \
+    capacity. I decided to not fix this issue as the cost would have been much higher than the other upgrades, \
+    and to instead continue to only use it around my house.</p>\
+    <p>While troubleshooting issues as I expanded my home network shortly after this project, I got substantial \
+    use out of the computer thanks to its ethernet port which my MacBook does not have. This was certainly a fun \
+    dive into seeing how much I could revitalize an old machine with cost-effective upgrades and the use of \
+    lightweight software.</p>\
+    ",
     references: `
     <ul>
-        <li><a href="LINK">TEXT</a></li>
+        <li><a href="https://pop.system76.com/">Pop!_OS</a></li>
     </ul>
     `,
     imageName: "icons/popos.png", // image source: https://iconduck.com/icons/64969/pop-os
-    projectImages: [""],
+    projectImages: [
+      "projectGallery/PopOS/PopOS1.png",
+      "projectGallery/PopOS/PopOS2.png",
+    ],
     created: "January 29th, 2024",
     updated: "February 7th, 2024",
   },
@@ -171,14 +227,31 @@ export const projects = [
       "Instead of paying $8/month for the cloud synchronization service offered by my main notetaking app 'Obsidian', \
       I set up Syncthing to synchronize my notes across all my devices using the NAS as the intermediary. \
       It's a great open-source alternative.",
-    descriptionLong: "",
+    descriptionLong:
+      '<p>While completing Google’s “Cybersecurity Specialization” on Coursera I decided I needed a new \
+    system for keeping my notes so I could easily index through. I settled on <a href="https://obsidian.md/">Obsidian</a>, \
+    and I found it was exactly what I had been looking for. I began entering my notes into it but later realized the \
+    inconvenience of having to switch back to my MacBook (where I usually do my work) if I wanted to view or add to my \
+    notes while using my PC.</p>\
+    <p>Obsidian has a windows app as well, but the trouble now was synchronizing my notes—a service that Obsidian \
+    themselves offer for $8 a month. This seemed a bit pricey to me, and considering I had recently built my \
+    <a href="../projects/NAS/">NAS</a>, I figured there must be a way to synchronize my notes for free.</p>\
+    <p>This is where <a href="https://syncthing.net/">Syncthing</a> comes in, an open source continuous file \
+    synchronization program. I installed clients on my Macbook, PC, and the NAS. The next step was to set the target \
+    directory as the location where Obsidian stores notes (saved as markdown files), and to ensure the service would be \
+    able to keep running in the background.</p>\
+    <p>This resolved the need to synchronize my notes between my Mac and PC, with the added benefit of redundantly storing \
+    my notes on the NAS as well. To bridge the gap between these devices and my iPhone where I also wanted to be able to view \
+    my notes, I simply configured Obsidian on both my Apple devices to write their files to iCloud storage so the synchronization \
+    would be handled automatically.</p>',
     references: `
     <ul>
-        <li><a href="LINK">TEXT</a></li>
+        <li><a href="https://syncthing.net/">Syncthing</a></li>
+        <li><a href="https://obsidian.md/">Obsidian</a></li>
     </ul>
     `,
     imageName: "icons/syncthing.png", // image source: https://commons.wikimedia.org/wiki/File:SyncthingAugustLogo.png
-    projectImages: [""],
+    projectImages: ["projectGallery/Syncthing/SyncthingInterface.png"],
     created: "July 24th, 2023",
     updated: "July 26th, 2023",
   },

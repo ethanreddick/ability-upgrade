@@ -11,9 +11,9 @@
                 <p>
                     My name is Ethan Reddick and this is my personal site that I
                     use for my blog and to showcase some of my projects. I am a
-                    newly commissioned Cyber officer in the Georgia Army
-                    National Guard who loves building things with software and
-                    learning to keep them safe.
+                    Cyber officer in the Georgia Army National Guard who loves
+                    building things with software and learning to keep them
+                    safe.
                 </p>
             </div>
         </div>
