@@ -26,7 +26,11 @@ export const projects = [
     </ul>
     `,
     imageName: "icons/nas.png", // image source: https://www.flaticon.com/free-icon/nas_4943821
-    projectImages: [""],
+    projectImages: [
+      "projectGallery/NAS/NAS1.png",
+      "projectGallery/NAS/NAS2.png",
+      "projectGallery/NAS/NAS3.png",
+    ],
     created: "July 20th, 2023",
     updated: "January 23rd, 2024",
   },
@@ -154,7 +158,10 @@ export const projects = [
     </ul>
     `,
     imageName: "icons/pi.png", // image source: https://iconduck.com/icons/14184/raspberry-pi
-    projectImages: [""],
+    projectImages: [
+      "projectGallery/RaspberryPi/RaspberryPi1.png",
+      "projectGallery/RaspberryPi/RaspberryPi2.png",
+    ],
     created: "February 21st, 2024",
     updated: "February 24th, 2024",
   },
