@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 # Video files
 /src/assets/projectGallery/Search/SearchDemo.mp4
+
+# Secrets
+server.key
+server.cert
